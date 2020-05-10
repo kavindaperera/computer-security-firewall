@@ -14,12 +14,22 @@
             "saddress": "192.168.1.0",
             "daddress": "10.10.10.0",
             "sport": "any",
+            "dport": "80",
+            "interface": "interface_1",
+            "action": "ACCEPT"
+        }
+    ],
+    "3": [
+        {
+            "saddress": "192.168.1.0",
+            "daddress": "10.10.10.0",
+            "sport": "any",
             "dport": "any",
             "interface": "interface_1",
             "action": "DENY"
         }
     ],
-    "3": [
+    "4": [
         {
             "saddress": "any",
             "daddress": "any",

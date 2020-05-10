@@ -1,7 +1,6 @@
 import ipaddress
 import json
 
-
 # creating a dictionary from ip datagram
 def analyse_datagram(datagram_header):
     protocol_dict = {1: 'ICMP', 2: 'IGMP', 6: 'TCP', 17: 'UDP'}
