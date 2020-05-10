@@ -83,3 +83,4 @@ def firewall(interface):
 
 
 firewall('interface_1')
+firewall('interface_2')
