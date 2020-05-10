@@ -4,20 +4,24 @@ import json
 #Considering the two networks 192.168.1.0 and 10.10.10.0
 #interface_1 => 192.168.1.0
 #interface_2 => 10.10.10.0
-
 # creating a dictionary from ip datagram
 def analyse_datagram(datagram_header):
     protocol_dict = {1: 'ICMP', 2: 'IGMP', 6: 'TCP', 17: 'UDP'}
     version_bin = datagram_header[0:4]
     ihl_bin = datagram_header[4:8]
     total_length_bin = datagram_header[16:32]
+    #protocol (TCP/UDP)
     protocol_bin = datagram_header[72:80]
+    #source address
     saddress_bin = datagram_header[96:128]
+    #destination address
     daddress_bin = datagram_header[128:160]
+    #Internet Header Length
     ihl = int(ihl_bin, 2) * 32
     protocol = int(protocol_bin, 2)
     protocol = protocol_dict.get(protocol)
     payload = datagram_header[ihl:]
+    #getting the dot notations for addresses
     saddress = ipaddress.ip_address(
         int('.'.join(str(int(x, 2)) for x in saddress_bin.split())))
     daddress = ipaddress.ip_address(
