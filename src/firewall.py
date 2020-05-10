@@ -1,7 +1,6 @@
 import ipaddress
 import json
 
-test_datagram = "0100010100010001000000001111101000000000000000010010000000000001000000010000000100000000000000011100000010101000000000010000000100001010000010100000000100000001000000011111010000000001001011000000000000000001000000000000000110101010101010101010101010101010"
 
 # creating a dictionary from ip datagram
 def analyse_datagram(datagram_header):
@@ -32,10 +31,19 @@ def filter(headers, interface):
         rules = json.load(f)
 
     for key in rules:
-        print(key, '=>', rules[key])
+        if (rules[key][0].get("interface") == interface):
+            print(rules[key])
+
+
+def firewall(interface):
+    with open(interface+'.json') as f:
+        tests = json.load(f)
+
+    for key in tests:
+        headers = analyse_datagram(tests[key])
+        #print(headers)
+        filter(headers,interface)
 
 
 
-print ("headers => ", analyse_datagram(test_datagram))
-filter(1,2)
-
+firewall('interface_1')

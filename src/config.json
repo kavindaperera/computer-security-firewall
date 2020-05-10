@@ -1,20 +1,22 @@
 {
     "1": [
         {
-            "saddress": "192.168.1.1",
-            "daddress": "10.10.10.1",
-            "sport": "80",
-            "dport": "any",
+            "saddress": "10.10.10.0",
+            "daddress": "10.10.11.0",
+            "sport": "any",
+            "dport": "443",
+            "interface": "interface_1",
             "action": "ACCEPT"
         }
     ],
     "2": [
         {
-            "saddress": "192.168.1.1",
-            "daddress": "10.10.10.1",
+            "saddress": "10.10.11.0",
+            "daddress": "10.10.10.0",
             "sport": "any",
-            "dport": "any",
-            "action": "DENY"
+            "dport": "80",
+            "interface": "interface_2",
+            "action": "ACCEPT"
         }
     ]
 }
