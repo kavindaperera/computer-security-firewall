@@ -1,6 +1,10 @@
 import ipaddress
 import json
 
+#Considering the two networks 192.168.1.0 and 10.10.10.0
+#interface_1 => 192.168.1.0
+#interface_2 => 10.10.10.0
+
 # creating a dictionary from ip datagram
 def analyse_datagram(datagram_header):
     protocol_dict = {1: 'ICMP', 2: 'IGMP', 6: 'TCP', 17: 'UDP'}
@@ -79,7 +83,7 @@ def firewall(interface):
     for key in tests:
         headers = analyse_datagram(tests[key])
         filter(headers, interface)
-        print('=================================================================================================================================================')
+        print('=================================================================================================================================')
 
 
 firewall('interface_1')
