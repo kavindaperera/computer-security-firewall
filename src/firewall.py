@@ -22,17 +22,55 @@ def analyse_datagram(datagram_header):
     sport = int(payload[:16], 2)
     dport = int(payload[16:32], 2)
     headers = {'saddress': saddress, 'daddress': daddress,
-        'sport': sport, 'dport': dport, 'protocol': protocol}
+               'sport': sport, 'dport': dport, 'protocol': protocol}
     return (headers)
 
-## ip firewall filter
+# ip firewall filter
 def filter(headers, interface):
+    saddress = str(headers.get("saddress")).split(".")
+    daddress = str(headers.get("daddress")).split(".")
+    sport = str(headers.get("sport"))
+    dport = str(headers.get("dport"))
+    protocol = headers.get("protocol")
+    print(headers)
+
     with open('config.json') as f:
         rules = json.load(f)
 
     for key in rules:
         if (rules[key][0].get("interface") == interface):
-            print(rules[key])
+            if (rules[key][0].get("saddress") != 'any'):
+                r_saddress = rules[key][0].get("saddress").split('.')
+                if (r_saddress[0] == saddress[0] and r_saddress[1] == saddress[1] and r_saddress[2] == saddress[2]):
+                    if (rules[key][0].get("daddress") != 'any'):
+                        r_daddress = rules[key][0].get("daddress").split('.')
+                        if (r_daddress[0] == daddress[0] and r_daddress[1] == daddress[1] and r_daddress[2] == daddress[2]):
+                            if (rules[key][0].get("dport")!= 'any'):
+                                r_dport = rules[key][0].get("dport")
+                                if (int(dport)==int(r_dport)):
+                                    print(interface)
+                                    print(rules[key][0].get("action"))
+                                    break
+                                else:
+                                    continue
+                            else:
+                                print(interface)
+                                print(rules[key][0].get("action"))
+                                break
+                        else:
+                            continue
+                    else:
+                        print(interface)
+                        print(rules[key][0].get("action"))
+                        break
+                else:
+                    continue
+            else:
+                print(interface)
+                print(rules[key][0].get("action"))
+                break
+        else:
+            continue
 
 
 def firewall(interface):
@@ -41,9 +79,8 @@ def firewall(interface):
 
     for key in tests:
         headers = analyse_datagram(tests[key])
-        #print(headers)
-        filter(headers,interface)
-
+        filter(headers, interface)
+        print('=================================================================================================================================================')
 
 
 firewall('interface_1')

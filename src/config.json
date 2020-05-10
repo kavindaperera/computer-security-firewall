@@ -1,22 +1,32 @@
 {
     "1": [
         {
-            "saddress": "10.10.10.0",
-            "daddress": "10.10.11.0",
+            "saddress": "192.168.1.0",
+            "daddress": "10.10.10.0",
             "sport": "any",
-            "dport": "443",
+            "dport": "43",
             "interface": "interface_1",
             "action": "ACCEPT"
         }
     ],
     "2": [
         {
-            "saddress": "10.10.11.0",
+            "saddress": "192.168.1.0",
             "daddress": "10.10.10.0",
             "sport": "any",
-            "dport": "80",
-            "interface": "interface_2",
-            "action": "ACCEPT"
+            "dport": "any",
+            "interface": "interface_1",
+            "action": "DENY"
+        }
+    ],
+    "3": [
+        {
+            "saddress": "any",
+            "daddress": "any",
+            "sport": "any",
+            "dport": "any",
+            "interface": "interface_1",
+            "action": "DROP"
         }
     ]
 }
